@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+
+	<!-- ======================================== Form Bean Definitions -->
+
+	<form-beans>
+
+		<form-bean name="addProblemSolutionForm" type="com.igate.isr.forms.AddProblemSolutionForm" />
+		 <form-bean name="viewProblemSolutionForm" type="com.igate.isr.forms.ViewProblemSolutionForm"/>
+		  <form-bean name="loginForm" type="com.igate.isr.forms.LoginForm"/>
+		  	<form-bean name="SearchpageForm" type="com.igate.isr.forms.SearchPageForm"></form-bean>
+		<form-bean name="SearchResultForm" type="com.igate.isr.forms.SearchResultForm"></form-bean>
+		  <form-bean name="registrationform" type="com.igate.isr.forms.RegistrationForm"/>
+		   <form-bean name="testForm2" type="com.igate.isr.forms.SolutionApprovalForm" />
+		    <form-bean name="testForm3" type="com.igate.isr.forms.ViewAndAddTechnologyForm"/>
+		    <form-bean name="testForm1" type="com.igate.isr.forms.TechnologyStatisticsForm"/>
+		    <form-bean name="testForm" type="com.igate.isr.forms.SolutionStatisticsByUserForm"/>
+    	</form-beans>
+	
+	
+	<!-- =================================== Action Mapping Definitions -->
+
+
+
+	<action-mappings>
+	
+		
+		<action path="/loadAddProblemSolutionPage"
+			type="com.igate.isr.actions.AddProblemSolutionAction"
+			name="addProblemSolutionForm" scope="session"
+			input="/web/jsp/AddProblemSolutionPageLoader.jsp" parameter="mode"
+			validate="false">
+			<forward name="loadAddProblemSolution"
+				path="/web/jsp/AddProblemSolution.jsp" />
+		</action>
+
+	
+		
+		<action path="/addProblemSolution"
+			type="com.igate.isr.actions.AddProblemSolutionAction"
+			name="addProblemSolutionForm" scope="session"
+			input="/web/jsp/AddProblemSolution.jsp" parameter="mode">
+			<forward name="addProblemSolution"
+				path="/web/jsp/AddProblemSolution.jsp" />
+				<forward name="loadAddProblemSolution"
+				path="/web/jsp/AddProblemSolution.jsp" />	
+		</action>
+	
+		 <action path="/registeredUserNavigation"
+     type="com.igate.isr.actions.RegisteredUserNavigationAction"    
+     parameter="mode"
+    input="/web/jsp/RegisteredUserHeader.jsp">
+    <forward name="Home" path="/web/jsp/MainPage.jsp"></forward>
+    <forward name="AddProblemSolution" path="/addProblemSolution.do?mode=doLoadTechnology"></forward>
+    <forward name="viewProblemSolution" path="/loadViewProblemSolution.do?mode=viewProblemSolution"></forward>
+    <forward name="logout" path="/loadLogout.do?mode=doLogout"></forward>
+    </action>
+   
+    
+    <action path="/loadViewProblemSolution"
+      type="com.igate.isr.actions.ViewProblemSolutionAction"
+      name="viewProblemSolutionForm"
+      scope="session"
+      input="/web/jsp/RegisteredUserHeader.jsp"
+      parameter="mode">
+       <forward name="viewDetails" path="/web/jsp/ViewProblemSolution.jsp"/>
+     </action>
+     
+      <action path="/loadLogin"
+      type="com.igate.isr.actions.LoginAction"
+      name="loginForm"
+     
+      scope="session"
+      input="/web/jsp/Login.jsp" 
+       parameter="mode">
+     
+      <forward name="welcome" path="/web/jsp/WelcomePage.jsp"/>
+      <forward name="approvalpage" path="/isr.do?mode=doLoadSolutionApproval" redirect="true"/>
+      <forward name="homepage" path="/web/jsp/MainPage.jsp" redirect="true"/>
+      <forward name="loginpage" path="/web/jsp/Login.jsp"/>
+      </action>
+      
+       
+    
+    	<action path="/displaysearch" type="com.igate.isr.actions.SearchPageAction"
+			scope="session" 
+			name="SearchpageForm" 
+			input="/web/jsp/MainPage.jsp" 
+			parameter="mode">
+		<forward name="Searchpage" path="/web/jsp/WelcomePage.jsp"/>
+		
+		</action>
+
+   		<action path="/searchSolution" type="com.igate.isr.actions.SearchPageAction"
+			scope="session" 
+			name="SearchResultForm" 
+			input="/web/jsp/WelcomePage.jsp" 
+			parameter="mode">
+	    <forward name="Resultpage" path="/web/jsp/SearchResult.jsp"/>
+	    </action>
+   		
+   		<action path="/result" type="com.igate.isr.actions.SearchResultAction"
+			scope="session" 
+			name="SearchResultForm" 
+			input="/web/jsp/SearchResult.jsp" 
+			parameter="mode">
+	    <forward name="Resultpage" path="/web/jsp/SearchResult.jsp"/>
+	    </action>
+	   
+	    <action path="/register"
+      type="com.igate.isr.actions.RegistrationAction"
+      name="registrationform" validate="false"
+      scope="session"
+      input="/web/jsp/Registration.jsp" 
+       parameter="mode">
+     
+      <forward name="registration" path="/web/jsp/Registration.jsp"/>
+      
+      <forward name="home" path="/web/jsp/MainPage.jsp"/>
+    </action>
+     <action path="/isr"
+           type="com.igate.isr.actions.SolutionApprovalAction"
+			name="testForm2" scope="request" input="/web/jsp/Login.jsp" parameter="mode">
+			<forward name="SolutionApproval" path="/web/jsp/SolutionApproval.jsp" />
+			<forward name="success" path="/isr.do?mode=doLoadSolutionApproval"></forward>
+	  </action>
+	   <action path="/display2"
+      type="com.igate.isr.actions.ViewAndAddTechnologyAction"
+      name="testForm3"
+      scope="request"
+      input="/web/jsp/AdminHeader.jsp" parameter="mode">
+      <forward name="view" path="/web/jsp/DisplayDetails.jsp"/>
+    </action>
+     <action path="/add"
+      type="com.igate.isr.actions.ViewAndAddTechnologyAction"
+      name="testForm3"
+      scope="request"
+      input="/web/jsp/DisplayDetails.jsp" parameter="mode">
+      <forward name="insert" path="/web/jsp/DisplayDetails.jsp"></forward>
+      <forward name="insert" path="/display2.do?mode=doLoadTechnology"></forward> 
+    </action>
+     
+     <action path="/display1"
+      type="com.igate.isr.actions.TechnologyStatisticsAction"
+      name="testForm1"
+      scope="session"
+          input="/web/jsp/AdminHeader.jsp" parameter="mode">
+       <forward name="StatisticsByTechnology" path="/web/jsp/StatisticsByTechnology.jsp"/>
+      </action>
+      <action path="/display"
+      type="com.igate.isr.actions.SolutionStatisticsByUserAction"
+      name="testForm"
+      scope="session"
+      input="/web/jsp/AdminHeader.jsp"  parameter="mode">
+       <forward name="SolutionStatisticsByUser" path="/web/jsp/SolutionStatisticsByUser.jsp"/>
+      </action>
+      
+       <action path="/guestUserNavigation" 
+    type="com.igate.isr.actions.GuestUserNavigationAction"    
+    
+    parameter="mode" validate="false"
+    input="/web/jsp/guestUserHeader.jsp">
+    <forward name="login" path="/web/jsp/Login.jsp"/>
+    <forward name="registration" path="/web/jsp/Registration.jsp"/>
+      </action>
+      
+     <action path="/LoginNavigation" 
+    type="com.igate.isr.actions.LoginNavigationAction"
+     input="/web/jsp/guestUserHeader.jsp" parameter="mode" validate="false" >
+      <forward name="signup" path="/web/jsp/Registration.jsp"/>
+      <forward name="back" path="/web/jsp/WelcomePage.jsp"/>
+      </action>
+      
+      <action path="/AdminNavigation" 
+    type="com.igate.isr.actions.AdminNavigationAction"
+     input="/web/jsp/AdminHeader.jsp" parameter="mode" validate="false" >
+      <forward name="solutionApproval" path="/isr.do?mode=doLoadSolutionApproval"/>
+      <forward name="viewAndAddTechnology" path="/display2.do?mode=doLoadTechnology"/>
+      <forward name="technologyStatistics" path="/display1.do?mode=doLoadTechnologyStatistics"/>
+      <forward name="userStatistics" path="/display.do?mode=doLoadSolutionStatisticsByUser"/>
+      <forward name="logout" path="/loadLogout.do?mode=doLogout"/>
+      </action>
+      
+      
+      
+       <action path="/loadLogout"
+      type="com.igate.isr.actions.LoginAction"
+     scope="session"
+      input="/web/jsp/AdminHeader.jsp" 
+       parameter="mode">
+     <forward name="welcome" path="/web/jsp/MainPage.jsp"/>
+      </action>
+       
+    
+   		</action-mappings>
+   		<controller><set-property property="processorClass" value="com.igate.isr.actions.CustomRequestProcessor"></set-property></controller>
+
+	<!-- ================================ Message Resources Definitions -->
+
+	<message-resources parameter="resources.application" ></message-resources>
+
+    
+
+</struts-config>
+
